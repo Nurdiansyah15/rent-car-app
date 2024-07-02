@@ -3,7 +3,7 @@ package enigma.rent.car.app.services;
 import enigma.rent.car.app.models.Brand;
 import enigma.rent.car.app.models.Car;
 import enigma.rent.car.app.repositories.CarRepo;
-import enigma.rent.car.app.utils.dto.CarDTO;
+import enigma.rent.car.app.utils.dto.CarDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class CarServImpl implements CarServ{
     }
 
     @Override
-    public Car create(CarDTO car) {
+    public Car create(CarDto car) {
         Brand brand = brandServ.findById(car.getBrand_id());
         Car newCar = Car.builder()
                 .name(car.getName())
@@ -38,7 +38,7 @@ public class CarServImpl implements CarServ{
     }
 
     @Override
-    public Car update(Integer id, CarDTO req) {
+    public Car update(Integer id, CarDto req) {
         Car newCar = carRepo.findById(id).orElse(null);
         newCar.setBrand(brandServ.findById(req.getBrand_id()));
         newCar.setName(req.getName());

@@ -11,10 +11,12 @@ import java.util.List;
 public class RentServImpl implements RentServ {
     private final RentRepo rentRepository;
     private final UserServ userService;
+    private final CarServ carService;
 
-    public RentServImpl(RentRepo rentRepository, UserServ userService) {
+    public RentServImpl(RentRepo rentRepository, UserServ userService, CarServ carServ) {
         this.rentRepository = rentRepository;
         this.userService = userService;
+        this.carService = carServ;
     }
 
 
@@ -35,7 +37,7 @@ public class RentServImpl implements RentServ {
         newRent.setUser(userService.findById(rent.getUser_id()));
         newRent.setPrice(rent.getPrice());
         newRent.setEnds_at(rent.getEnds_at());
-        newRent.setCar_id(rent.getCar_id());
+        newRent.setCar(carService.findById(rent.getCar_id()));
 
         rentRepository.save(newRent);
 

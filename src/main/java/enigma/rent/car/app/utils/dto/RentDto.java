@@ -1,5 +1,6 @@
 package enigma.rent.car.app.utils.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,6 +13,8 @@ import java.time.LocalDate;
 public class RentDto {
     private Integer user_id;
     private Integer price;
-    private LocalDate ends_at;
     private Integer car_id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate ends_at;
 }

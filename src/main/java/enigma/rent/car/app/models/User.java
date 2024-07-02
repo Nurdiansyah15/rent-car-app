@@ -1,5 +1,6 @@
 package enigma.rent.car.app.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,5 +25,6 @@ public class User {
     private Integer balance;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Rent> rents = new ArrayList<>();
 }
