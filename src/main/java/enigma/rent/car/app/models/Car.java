@@ -19,6 +19,6 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
-    private boolean available;
-
+    private Boolean available;
+    private Integer price;
 }
