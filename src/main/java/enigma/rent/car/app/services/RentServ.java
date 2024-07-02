@@ -9,6 +9,6 @@ public interface RentServ {
     List<Rent> findAll();
     Rent findById(Integer id);
     Rent create(RentDto rent);
-    Rent update(Integer id, RentDto user);
+    Rent update(Integer id);
     void deleteById(Integer id);
 }
