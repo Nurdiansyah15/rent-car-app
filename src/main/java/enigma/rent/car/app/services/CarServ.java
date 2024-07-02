@@ -14,7 +14,7 @@ public interface CarServ {
 
     Car create(CarDTO car);
 
-    Car update(Integer id, Car car);
+    Car update(Integer id, CarDTO car);
 
     void deleteById(Integer id);
 }

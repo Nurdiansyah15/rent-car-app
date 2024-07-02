@@ -2,7 +2,6 @@ package enigma.rent.car.app.services;
 
 import enigma.rent.car.app.models.Brand;
 import enigma.rent.car.app.models.Car;
-import enigma.rent.car.app.repositories.BrandRepo;
 import enigma.rent.car.app.repositories.CarRepo;
 import enigma.rent.car.app.utils.dto.CarDTO;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +37,14 @@ public class CarServImpl implements CarServ{
         return carRepo.save(newCar);
     }
 
-
     @Override
-    public Car update(Integer id, Car user) {
-        return null;
+    public Car update(Integer id, CarDTO req) {
+        Car newCar = carRepo.findById(id).orElse(null);
+        newCar.setBrand(brandServ.findById(req.getBrand_id()));
+        newCar.setName(req.getName());
+        newCar.setAvailable(req.getAvailable());
+        newCar.setPrice(req.getPrice());
+        return carRepo.save(newCar);
     }
 
     @Override
