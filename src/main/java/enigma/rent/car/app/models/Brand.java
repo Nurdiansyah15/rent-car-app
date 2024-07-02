@@ -4,21 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "cars")
+@Table(name = "brands")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
 @ToString
-public class Car {
+public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
-    private Boolean available;
-    private Integer price;
 }
