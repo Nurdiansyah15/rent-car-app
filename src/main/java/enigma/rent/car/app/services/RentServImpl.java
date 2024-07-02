@@ -48,7 +48,9 @@ public class RentServImpl implements RentServ {
         newRent.setPrice(existingCar.getPrice());
         newRent.setEnds_at(rent.getEnds_at());
         newRent.setCar(existingCar);
+        existingCar.setAvailable(false);
 
+        carRepo.save(existingCar);
         rentRepository.save(newRent);
 
         return newRent;
@@ -62,9 +64,11 @@ public class RentServImpl implements RentServ {
         LocalDate skrg = LocalDate.now();
 
         if (targetRent.getEnds_at().isBefore(skrg)) {
-            targetUser.setBalance(targetUser.getBalance() - targetRent.getPrice());
-        } else if(targetRent.getEnds_at().isAfter(skrg)){
             targetUser.setBalance(targetUser.getBalance() - targetRent.getPrice() + (targetRent.getPrice() * 10 / 100) );
+
+        } else if(targetRent.getEnds_at().isAfter(skrg)){
+            targetUser.setBalance(targetUser.getBalance() - targetRent.getPrice());
+
         }
         targetRent.setCompleted(true);
         targetCar.setAvailable(true);
