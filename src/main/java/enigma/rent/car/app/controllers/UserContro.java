@@ -2,6 +2,7 @@ package enigma.rent.car.app.controllers;
 
 import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.services.UserServ;
+import enigma.rent.car.app.utils.dto.UserTopUpDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,5 +37,10 @@ public class UserContro {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         userServ.deleteById(id);
+    }
+
+    @PutMapping("/topup/{id}")
+    public User topup(@PathVariable Integer id, @RequestBody UserTopUpDto user) {
+        return userServ.topup(id,user);
     }
 }

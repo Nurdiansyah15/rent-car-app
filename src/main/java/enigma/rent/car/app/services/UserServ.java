@@ -1,6 +1,7 @@
 package enigma.rent.car.app.services;
 
 import enigma.rent.car.app.models.User;
+import enigma.rent.car.app.utils.dto.UserTopUpDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface UserServ {
     User update(Integer id, User user);
 
     void deleteById(Integer id);
+
+    User topup(Integer id, UserTopUpDto user);
 }
