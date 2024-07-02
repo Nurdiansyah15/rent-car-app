@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface BrandServ {
     List<Brand> findAll();
     Brand findById(Integer id);
