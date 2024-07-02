@@ -2,7 +2,7 @@ package enigma.rent.car.app.services;
 
 import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.repositories.UserRepo;
-import enigma.rent.car.app.utils.dto.UserTopUpDto;
+import enigma.rent.car.app.utils.dto.UserTopupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +45,7 @@ public class UserServImpl implements UserServ{
     }
 
     @Override
-    public User topup(Integer id, UserTopUpDto user) {
+    public User topup(Integer id, UserTopupDto user) {
         User userExisting = userRepo.findById(id).orElse(null);
         if (userExisting!=null){
             userExisting.setBalance(userExisting.getBalance()+user.getBalance());

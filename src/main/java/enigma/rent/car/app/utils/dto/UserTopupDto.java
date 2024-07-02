@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserTopUpDto {
+public class UserTopupDto {
     private Integer balance;
 }

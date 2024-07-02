@@ -2,7 +2,7 @@ package enigma.rent.car.app.controllers;
 
 import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.services.UserServ;
-import enigma.rent.car.app.utils.dto.UserTopUpDto;
+import enigma.rent.car.app.utils.dto.UserTopupDto;
 import enigma.rent.car.app.utils.responseWrapper.ResponseWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,7 @@ public class UserContro {
     }
 
     @PutMapping("/topup/{id}")
-    public @ResponseBody ResponseWrapper topup(@PathVariable Integer id, @RequestBody UserTopUpDto user) {
+    public @ResponseBody ResponseWrapper topup(@PathVariable Integer id, @RequestBody UserTopupDto user) {
         if (userServ.topup(id, user) == null) {
             return new ResponseWrapper(400, "User Not Found", null);
         }else {
