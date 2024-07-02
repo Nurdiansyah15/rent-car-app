@@ -23,8 +23,4 @@ public class User {
 
     private String name;
     private Integer balance;
-
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private List<Rent> rents = new ArrayList<>();
 }
