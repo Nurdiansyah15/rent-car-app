@@ -20,7 +20,9 @@ public class UserServImpl implements UserServ{
 
     @Override
     public User findById(Integer id) {
-        return userRepo.findById(id).orElse(null);
+        return userRepo.findById(id).orElseThrow(
+                () -> new RuntimeException("User with ID: "+id+" Not Found")
+        );
     }
 
     @Override

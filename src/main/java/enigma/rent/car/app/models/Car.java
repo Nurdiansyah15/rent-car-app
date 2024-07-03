@@ -15,10 +15,13 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
     private String name;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
-    private Boolean available = true;
+
+    private Boolean available;
     private Integer price;
 }

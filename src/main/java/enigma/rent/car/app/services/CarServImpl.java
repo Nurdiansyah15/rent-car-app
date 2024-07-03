@@ -22,7 +22,9 @@ public class CarServImpl implements CarServ{
 
     @Override
     public Car findById(Integer id) {
-        return carRepo.findById(id).orElse(null);
+        return carRepo.findById(id).orElseThrow(
+                () -> new RuntimeException("Car with ID: "+id+" not found")
+        );
     }
 
     @Override

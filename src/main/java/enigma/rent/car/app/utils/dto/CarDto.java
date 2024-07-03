@@ -17,6 +17,5 @@ public class CarDto {
     private Integer brand_id;
     @NotNull
     private Integer price;
-    @NotNull
-    private Boolean available;
+    private Boolean available=true;
 }
