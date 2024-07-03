@@ -3,7 +3,10 @@ package enigma.rent.car.app.services;
 import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.repositories.UserRepo;
 import enigma.rent.car.app.utils.dto.UserTopupDto;
+import enigma.rent.car.app.utils.spesifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +17,18 @@ public class UserServImpl implements UserServ{
     private final UserRepo userRepo;
 
     @Override
-    public List<User> findAll() {
-        return userRepo.findAll();
+    public Page<User> findAll(Pageable pageable, String name) {
+        if (name != null && !name.isEmpty()) {
+            return userRepo.findAll(UserSpecification.getSpecification(name), pageable);
+        }
+        return userRepo.findAll(pageable);
     }
 
     @Override
     public User findById(Integer id) {
-        return userRepo.findById(id).orElse(null);
+        return userRepo.findById(id).orElseThrow(
+                () -> new RuntimeException("User with ID: "+id+" Not Found")
+        );
     }
 
     @Override

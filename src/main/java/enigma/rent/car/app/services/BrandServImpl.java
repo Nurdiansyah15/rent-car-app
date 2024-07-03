@@ -2,7 +2,11 @@ package enigma.rent.car.app.services;
 
 import enigma.rent.car.app.models.Brand;
 import enigma.rent.car.app.repositories.BrandRepo;
+import enigma.rent.car.app.utils.spesifications.BrandSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,13 +17,26 @@ public class BrandServImpl implements BrandServ {
     private final BrandRepo brandRepo;
 
     @Override
-    public List<Brand> findAll() {
-        return brandRepo.findAll();
+    public Page<Brand> findAll(Pageable pageable, String name) {
+        Specification<Brand> specification = Specification.where(null);
+        if (name != null && !name.isEmpty()) {
+            specification = specification.and(BrandSpecification.searchCarByName(name));
+        }
+
+        // YOU CAN ADD MORE SPECIFICATIONS HERE
+
+        if (specification != null) {
+            return brandRepo.findAll(specification,pageable);
+        } else {
+            return brandRepo.findAll(pageable);
+        }
     }
 
     @Override
     public Brand findById(Integer id) {
-        return brandRepo.findById(id).orElse(null);
+        return brandRepo.findById(id).orElseThrow(
+                () -> new RuntimeException("Brand with ID: "+id+" not found")
+        );
     }
 
     @Override

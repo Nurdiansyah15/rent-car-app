@@ -6,8 +6,9 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ResponseWrapper {
-    private Integer status;
+@Builder
+public class WebResponse<T> {
+    private String status;
     private String message;
     private Object data;
 }

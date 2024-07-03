@@ -3,8 +3,17 @@ package enigma.rent.car.app.controllers;
 import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.services.UserServ;
 import enigma.rent.car.app.utils.dto.UserTopupDto;
-import enigma.rent.car.app.utils.responseWrapper.ResponseWrapper;
+import enigma.rent.car.app.utils.responseWrapper.PageResponseWrapper;
+import enigma.rent.car.app.utils.responseWrapper.Res;
+import enigma.rent.car.app.utils.responseWrapper.WebResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,40 +21,49 @@ import java.util.List;
 @RequestMapping("/users")
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class UserContro {
     private final UserServ userServ;
 
     @GetMapping
-    public List<User> findAll() {
-        return userServ.findAll();
+    public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false) String name) {
+//        return Res.renderJson(userServ.findAll(pageable, name), "KETEMU!!", HttpStatus.OK);
+        Page<User> res = userServ.findAll(pageable, name);
+        PageResponseWrapper<User> result = new PageResponseWrapper<>(res);
+        return Res.renderJson(
+                result,
+                "Success",
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable Integer id) {
-        return userServ.findById(id);
+    public ResponseEntity<?> findById(@PathVariable Integer id) {
+        return Res.renderJson(userServ.findById(id), "KETEMU!!", HttpStatus.OK);
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
-        return userServ.create(user);
+    public ResponseEntity<?> create(@Valid @RequestBody User user) {
+        return Res.renderJson(userServ.create(user), "Berhasil dibuat!!", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public User update(@PathVariable Integer id, @RequestBody User user) {
-        return userServ.update(id, user);
+    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody User user) {
+        return Res.renderJson(userServ.update(id, user), "UPDATED MWEHEHEHE!!", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         userServ.deleteById(id);
+        return Res.renderJson(null, "Berhasil Delete", HttpStatus.OK);
     }
 
     @PutMapping("/topup/{id}")
-    public @ResponseBody ResponseWrapper topup(@PathVariable Integer id, @RequestBody UserTopupDto user) {
+    public ResponseEntity<?> topup(@PathVariable Integer id, @RequestBody UserTopupDto user) {
         if (userServ.topup(id, user) == null) {
-            return new ResponseWrapper(400, "User Not Found", null);
-        }else {
-            return new ResponseWrapper(200, "Popup Success", userServ.topup(id, user));
+            return Res.renderJson(null, "User Not Found", HttpStatus.BAD_REQUEST);
+        } else {
+            return Res.renderJson(userServ.topup(id, user), "Popup Success", HttpStatus.OK);
         }
     }
 }

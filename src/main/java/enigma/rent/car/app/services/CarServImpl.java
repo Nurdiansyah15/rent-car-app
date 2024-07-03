@@ -4,25 +4,46 @@ import enigma.rent.car.app.models.Brand;
 import enigma.rent.car.app.models.Car;
 import enigma.rent.car.app.repositories.CarRepo;
 import enigma.rent.car.app.utils.dto.CarDto;
+import enigma.rent.car.app.utils.spesifications.CarSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CarServImpl implements CarServ{
+public class CarServImpl implements CarServ {
     private final CarRepo carRepo;
     private final BrandServ brandServ;
 
     @Override
-    public List<Car> findAll() {
-        return carRepo.findAll();
+    public Page<Car> findAll(Pageable pageable, String name, Boolean available) {
+        Specification<Car> specification = Specification.where(null);
+        if (name != null && !name.isEmpty()) {
+            specification = specification.and(CarSpecification.searchCarByName(name));
+        }
+        if (available != null) {
+            specification = specification.and(CarSpecification.isCarAvailable(available));
+        }
+
+        // YOU CAN ADD MORE SPECIFICATIONS HERE
+
+        if (specification != null) {
+            return carRepo.findAll(specification,pageable);
+        } else {
+            return carRepo.findAll(pageable);
+        }
+
     }
 
     @Override
     public Car findById(Integer id) {
-        return carRepo.findById(id).orElse(null);
+        return carRepo.findById(id).orElseThrow(
+                () -> new RuntimeException("Car with ID: "+id+" not found")
+        );
     }
 
     @Override
