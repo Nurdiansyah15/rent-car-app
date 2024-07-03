@@ -4,6 +4,8 @@ import enigma.rent.car.app.models.Rent;
 import enigma.rent.car.app.services.RentServ;
 import enigma.rent.car.app.utils.dto.RentDto;
 import enigma.rent.car.app.utils.responseWrapper.Res;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +28,8 @@ public class RentContro {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        return Res.renderJson(rentService.findAll(), "Berhasil di create!!!", HttpStatus.OK);
+    public ResponseEntity<?> getAll(@PageableDefault(size = 10) Pageable pageable) {
+        return Res.renderJson(rentService.findAll(pageable), "Berhasil di create!!!", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

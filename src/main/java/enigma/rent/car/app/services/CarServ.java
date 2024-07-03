@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 
 public interface CarServ {
-    Page<Car> findAll(Pageable pageable, Boolean available);
+    Page<Car> findAll(Pageable pageable,String name, Boolean available);
 
     Car findById(Integer id);
 

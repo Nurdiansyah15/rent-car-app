@@ -3,9 +3,13 @@ package enigma.rent.car.app.controllers;
 import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.services.UserServ;
 import enigma.rent.car.app.utils.dto.UserTopupDto;
+import enigma.rent.car.app.utils.responseWrapper.PageResponseWrapper;
 import enigma.rent.car.app.utils.responseWrapper.Res;
 import enigma.rent.car.app.utils.responseWrapper.WebResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,23 +23,30 @@ public class UserContro {
     private final UserServ userServ;
 
     @GetMapping
-    public ResponseEntity<?> findAll(@RequestParam(required = false) String name) {
-        return Res.renderJson(userServ.findAll(name),"KETEMU!!", HttpStatus.OK);
+    public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false) String name) {
+//        return Res.renderJson(userServ.findAll(pageable, name), "KETEMU!!", HttpStatus.OK);
+        Page<User> res = userServ.findAll(pageable, name);
+        PageResponseWrapper<User> result = new PageResponseWrapper<>(res);
+        return Res.renderJson(
+                result,
+                "Success",
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id) {
-        return Res.renderJson(userServ.findById(id),"KETEMU!!", HttpStatus.OK);
+        return Res.renderJson(userServ.findById(id), "KETEMU!!", HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody User user) {
-        return Res.renderJson(userServ.create(user),"Berhasil dibuat!!", HttpStatus.OK);
+        return Res.renderJson(userServ.create(user), "Berhasil dibuat!!", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody User user) {
-        return Res.renderJson(userServ.update(id, user),"UPDATED MWEHEHEHE!!", HttpStatus.OK);
+        return Res.renderJson(userServ.update(id, user), "UPDATED MWEHEHEHE!!", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -48,7 +59,7 @@ public class UserContro {
     public ResponseEntity<?> topup(@PathVariable Integer id, @RequestBody UserTopupDto user) {
         if (userServ.topup(id, user) == null) {
             return Res.renderJson(null, "User Not Found", HttpStatus.BAD_REQUEST);
-        }else {
+        } else {
             return Res.renderJson(userServ.topup(id, user), "Popup Success", HttpStatus.OK);
         }
     }

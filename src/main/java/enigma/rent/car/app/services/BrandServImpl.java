@@ -26,7 +26,7 @@ public class BrandServImpl implements BrandServ {
         // YOU CAN ADD MORE SPECIFICATIONS HERE
 
         if (specification != null) {
-            return brandRepo.findAll(pageable, specification);
+            return brandRepo.findAll(specification,pageable);
         } else {
             return brandRepo.findAll(pageable);
         }

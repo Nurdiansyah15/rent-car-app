@@ -32,7 +32,7 @@ public class CarServImpl implements CarServ {
         // YOU CAN ADD MORE SPECIFICATIONS HERE
 
         if (specification != null) {
-            return carRepo.findAll(pageable, specification);
+            return carRepo.findAll(specification,pageable);
         } else {
             return carRepo.findAll(pageable);
         }

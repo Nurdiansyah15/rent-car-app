@@ -1,10 +1,15 @@
 package enigma.rent.car.app.controllers;
 
 import enigma.rent.car.app.models.Car;
+import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.services.CarServ;
 import enigma.rent.car.app.utils.dto.CarDto;
+import enigma.rent.car.app.utils.responseWrapper.PageResponseWrapper;
 import enigma.rent.car.app.utils.responseWrapper.Res;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +23,15 @@ public class CarContro {
     private final CarServ carServ;
 
     @GetMapping
-    public ResponseEntity<?> findAll(@RequestParam(required = false) String name, @RequestParam(required = false) Boolean available) {
-        return Res.renderJson(carServ.findAll(name, available), "KETEMU!!!", HttpStatus.OK);
+    public ResponseEntity<?> findAll(@PageableDefault(size = 10) Pageable pageable, @RequestParam(required = false) String name, @RequestParam(required = false) Boolean available) {
+//        return Res.renderJson(carServ.findAll(pageable, name, available), "KETEMU!!!", HttpStatus.OK);
+        Page<Car> res = carServ.findAll(pageable, name, available);
+        PageResponseWrapper<Car> result = new PageResponseWrapper<>(res);
+        return Res.renderJson(
+                result,
+                "Success",
+                HttpStatus.OK
+        );
     }
 
     @GetMapping("/{id}")

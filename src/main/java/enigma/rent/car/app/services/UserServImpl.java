@@ -19,7 +19,7 @@ public class UserServImpl implements UserServ{
     @Override
     public Page<User> findAll(Pageable pageable, String name) {
         if (name != null && !name.isEmpty()) {
-            return userRepo.findAll(pageable, UserSpecification.getSpecification(name));
+            return userRepo.findAll(UserSpecification.getSpecification(name), pageable);
         }
         return userRepo.findAll(pageable);
     }
