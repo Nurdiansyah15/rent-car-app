@@ -3,6 +3,8 @@ package enigma.rent.car.app.services;
 import enigma.rent.car.app.models.Brand;
 import enigma.rent.car.app.repositories.BrandRepo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +15,8 @@ public class BrandServImpl implements BrandServ {
     private final BrandRepo brandRepo;
 
     @Override
-    public List<Brand> findAll() {
-        return brandRepo.findAll();
+    public Page<Brand> findAll(Pageable pageable) {
+        return brandRepo.findAll(pageable);
     }
 
     @Override

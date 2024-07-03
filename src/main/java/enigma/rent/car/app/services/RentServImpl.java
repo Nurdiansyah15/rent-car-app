@@ -7,6 +7,8 @@ import enigma.rent.car.app.repositories.CarRepo;
 import enigma.rent.car.app.repositories.RentRepo;
 import enigma.rent.car.app.repositories.UserRepo;
 import enigma.rent.car.app.utils.dto.RentDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,8 +32,8 @@ public class RentServImpl implements RentServ {
 
 
     @Override
-    public List<Rent> findAll() {
-        return rentRepository.findAll();
+    public Page<Rent> findAll(Pageable pageable) {
+        return rentRepository.findAll(pageable);
     }
 
     @Override

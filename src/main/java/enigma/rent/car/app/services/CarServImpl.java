@@ -5,6 +5,8 @@ import enigma.rent.car.app.models.Car;
 import enigma.rent.car.app.repositories.CarRepo;
 import enigma.rent.car.app.utils.dto.CarDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +18,8 @@ public class CarServImpl implements CarServ{
     private final BrandServ brandServ;
 
     @Override
-    public List<Car> findAll() {
-        return carRepo.findAll();
+    public Page<Car> findAll(Pageable pageable) {
+        return carRepo.findAll(pageable);
     }
 
     @Override
