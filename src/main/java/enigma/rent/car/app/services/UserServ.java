@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface UserServ {
-    Page<User> findAll(Pageable pageable);
+    Page<User> findAll(Pageable pageable, String name);
 
     User findById(Integer id);
 

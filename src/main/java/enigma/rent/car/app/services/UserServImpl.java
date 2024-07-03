@@ -3,6 +3,7 @@ package enigma.rent.car.app.services;
 import enigma.rent.car.app.models.User;
 import enigma.rent.car.app.repositories.UserRepo;
 import enigma.rent.car.app.utils.dto.UserTopupDto;
+import enigma.rent.car.app.utils.spesifications.UserSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,10 @@ public class UserServImpl implements UserServ{
     private final UserRepo userRepo;
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
+    public Page<User> findAll(Pageable pageable, String name) {
+        if (name != null && !name.isEmpty()) {
+            return userRepo.findAll(pageable, UserSpecification.getSpecification(name));
+        }
         return userRepo.findAll(pageable);
     }
 

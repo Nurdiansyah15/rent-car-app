@@ -4,13 +4,10 @@ import enigma.rent.car.app.models.Car;
 import enigma.rent.car.app.utils.dto.CarDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 public interface CarServ {
-    Page<Car> findAll(Pageable pageable);
+    Page<Car> findAll(Pageable pageable, Boolean available);
 
     Car findById(Integer id);
 

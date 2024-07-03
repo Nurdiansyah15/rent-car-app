@@ -18,29 +18,29 @@ public class CarContro {
     private final CarServ carServ;
 
     @GetMapping
-    public ResponseEntity<?> findAll(){
-        return Res.renderJson(carServ.findAll(), "KETEMU!!!", HttpStatus.OK);
+    public ResponseEntity<?> findAll(@RequestParam(required = false) String name, @RequestParam(required = false) Boolean available) {
+        return Res.renderJson(carServ.findAll(name, available), "KETEMU!!!", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id){
+    public ResponseEntity<?> findById(@PathVariable Integer id) {
 
         return Res.renderJson(carServ.findById(id), "KETEMU!!!", HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CarDto car){
+    public ResponseEntity<?> create(@RequestBody CarDto car) {
 
         return Res.renderJson(carServ.create(car), "Berhasil di create!!!", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody CarDto car){
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody CarDto car) {
         return Res.renderJson(carServ.update(id, car), "Berhasil di update!!!", HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id){
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         carServ.deleteById(id);
         return Res.renderJson(null, "Berhasil di delete!!!", HttpStatus.OK);
     }

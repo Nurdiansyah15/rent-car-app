@@ -19,8 +19,8 @@ public class UserContro {
     private final UserServ userServ;
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
-        return Res.renderJson(userServ.findAll(),"KETEMU!!", HttpStatus.OK);
+    public ResponseEntity<?> findAll(@RequestParam(required = false) String name) {
+        return Res.renderJson(userServ.findAll(name),"KETEMU!!", HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

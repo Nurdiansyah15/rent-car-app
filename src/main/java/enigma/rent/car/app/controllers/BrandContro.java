@@ -17,9 +17,10 @@ public class BrandContro {
     private final BrandServ brandServ;
 
     @GetMapping
-    public ResponseEntity<?> findAll(){
-        return Res.renderJson(brandServ.findAll(), "KETEMU!!!", HttpStatus.OK);
+    public ResponseEntity<?> findAll( @RequestParam(required = false) String name){
+        return Res.renderJson(brandServ.findAll(name), "KETEMU!!!", HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Integer id){
         return Res.renderJson(brandServ.findById(id), "Ketemu", HttpStatus.OK);
