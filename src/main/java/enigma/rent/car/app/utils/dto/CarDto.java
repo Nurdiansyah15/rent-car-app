@@ -1,21 +1,16 @@
 package enigma.rent.car.app.utils.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
 public class CarDto {
-    @NotBlank
+    private Integer id;
     private String name;
-    @NotNull
     private Integer brand_id;
-    @NotNull
+    private Boolean available;
     private Integer price;
-    private Boolean available=true;
 }

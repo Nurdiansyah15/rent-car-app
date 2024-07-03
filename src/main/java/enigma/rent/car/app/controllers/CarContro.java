@@ -4,11 +4,9 @@ import enigma.rent.car.app.models.Car;
 import enigma.rent.car.app.services.CarServ;
 import enigma.rent.car.app.utils.dto.CarDto;
 import enigma.rent.car.app.utils.responseWrapper.Res;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.List;
 @RequestMapping("/cars")
 @RestController
 @RequiredArgsConstructor
-@Validated //Required for validation
 public class CarContro {
     private final CarServ carServ;
 
@@ -32,13 +29,13 @@ public class CarContro {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody CarDto car){
+    public ResponseEntity<?> create(@RequestBody CarDto car){
 
         return Res.renderJson(carServ.create(car), "Berhasil di create!!!", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody CarDto car){
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody CarDto car){
         return Res.renderJson(carServ.update(id, car), "Berhasil di update!!!", HttpStatus.OK);
     }
 

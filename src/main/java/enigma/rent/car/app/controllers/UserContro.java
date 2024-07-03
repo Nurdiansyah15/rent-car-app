@@ -5,11 +5,9 @@ import enigma.rent.car.app.services.UserServ;
 import enigma.rent.car.app.utils.dto.UserTopupDto;
 import enigma.rent.car.app.utils.responseWrapper.Res;
 import enigma.rent.car.app.utils.responseWrapper.WebResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.List;
 @RequestMapping("/users")
 @RestController
 @RequiredArgsConstructor
-@Validated
 public class UserContro {
     private final UserServ userServ;
 
@@ -32,12 +29,12 @@ public class UserContro {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody User user) {
+    public ResponseEntity<?> create(@RequestBody User user) {
         return Res.renderJson(userServ.create(user),"Berhasil dibuat!!", HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody User user) {
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody User user) {
         return Res.renderJson(userServ.update(id, user),"UPDATED MWEHEHEHE!!", HttpStatus.OK);
     }
 

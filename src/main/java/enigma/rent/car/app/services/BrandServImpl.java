@@ -21,9 +21,7 @@ public class BrandServImpl implements BrandServ {
 
     @Override
     public Brand findById(Integer id) {
-        return brandRepo.findById(id).orElseThrow(
-                () -> new RuntimeException("Brand with ID: "+id+" not found")
-        );
+        return brandRepo.findById(id).orElse(null);
     }
 
     @Override
